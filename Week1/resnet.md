@@ -14,7 +14,7 @@
 * 배경
   * VGGNet, GoogLeNet 등을 통해, 네트워크의 깊이가 매우 중요하다는 사실을 깨달았다.
   * 문제 1 : `vanishing/exploding gradients`
-    * 학습할 때, 레이어가 깊어질수록 전달되는 오차가 줄어들어 기울기가 소멸하여 학습이 되지 않는 현상
+    * layer가 깊어질수록 backpropagation 중에 gradient가 기하급수적으로 빠르게 0이 되거나 무한대가 되는 현상
     * 해결 : 
       * `normalized initialization`
       * `batch normalization`
@@ -29,9 +29,9 @@
 
 ## 구조
 ### `Residual Learning`
-<img src="https://user-images.githubusercontent.com/35680202/123977910-5ff6e700-d9fa-11eb-8950-73971fa0baaa.png" width="450" height="300">
+<img src="https://user-images.githubusercontent.com/35680202/124408181-a2188380-dd80-11eb-8043-f5a6b73ba088.png" width="600" height="300">
 
-* original 에서 $H(x) = x$ 를 배우는 것보다, residual learning 에서 $F(x) = 0$ 을 배우는 것이 더 쉽다.
+* $H(x) = x$ 를 배우는 것보다, $F(x) = 0$ 을 배우는 것이 더 쉽다.
 
 ### `Identity Mapping by Shortcuts`
 #### 수학적 표현
@@ -61,8 +61,11 @@
 #### Residual Network
 * 위의 Plain Network 를 기반으로, shortcut connections 를 넣어, 대응되는 residual 버전으로 만든다. (ResNet-34)
 * shortcut
-  * (A) identity mapping : dimension 이 같은 경우 그대로 더해주기
-  * (B) projection shortcut : 1x1conv 이용해서 dimension 맞춰주기
+  * dimension이 같은 경우
+    * identity mapping : dimension 이 같은 경우 그대로 더해주기
+  * dimension이 다른 경우
+    * (A) zero-padding shortcut
+    * (B) projection shortcut : 1x1 conv 이용해서 dimension 맞춰주기
 
 ## 구현
 * 특징
