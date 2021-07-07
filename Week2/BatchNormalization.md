@@ -17,7 +17,7 @@
 
   - Internal covariate shift를 완화시키기 위해 Batch Normalization을 사용
 
-  <img src="/Users/seohui/Library/Application Support/typora-user-images/스크린샷 2021-07-07 오후 9.15.46.png" alt="스크린샷 2021-07-07 오후 9.15.46" style="zoom:25%;" /> <img src="/Users/seohui/Library/Application Support/typora-user-images/스크린샷 2021-07-07 오후 9.17.20.png" alt="스크린샷 2021-07-07 오후 9.17.20" style="zoom:25%;" />
+<img width="400" alt="Internal Covariate Shift" src="https://user-images.githubusercontent.com/53266682/124772310-e2415700-df76-11eb-93a6-b415bf80116c.png" /> <img width="400" alt="Batch Normalization" src="https://user-images.githubusercontent.com/53266682/124772325-e40b1a80-df76-11eb-870f-ab554fb5a06a.png" />
 
 - 주요 내용
 
@@ -44,7 +44,7 @@
 
   - 심층 신경망의 internal 노드 분포의 변화
 
-     <img src="/Users/seohui/Library/Application Support/typora-user-images/스크린샷 2021-07-07 오후 9.15.46.png" alt="스크린샷 2021-07-07 오후 9.15.46" style="zoom:25%;" />
+     <img width="400" alt="Internal Covariate Shift" src="https://user-images.githubusercontent.com/53266682/124772310-e2415700-df76-11eb-93a6-b415bf80116c.png" />
 
 - 단점
 
@@ -78,7 +78,7 @@
 
 입력 층과 출력 층의 features를 동시에 whitening 하는 대신에, 각 scalar feature를 평균 0, 분산 1로 독립적으로 정규화
 
-<img src="/Users/seohui/Downloads/IMG_92EE698A627F-1.jpeg" alt="IMG_92EE698A627F-1" style="zoom:10%;" />
+<img width="250" alt="scalar feature normalization" src="https://user-images.githubusercontent.com/53266682/124772878-64318000-df77-11eb-86ac-df2383cc25c6.jpeg" />
 
 - 문제점 1 
 
@@ -92,7 +92,7 @@
 
   - 정규화된 값을 scale & shift
 
-    <img src="/Users/seohui/Downloads/IMG_CEC356F02687-1.jpeg" alt="IMG_CEC356F02687-1" style="zoom:10%;" />
+<img width="250" alt="scale & shift" src="https://user-images.githubusercontent.com/53266682/124772899-68f63400-df77-11eb-8b66-07425417f1e6.jpeg" />
 
 - 문제점 2
 
@@ -107,7 +107,7 @@
 SGD에서 mini-batch를 사용하므로, 각 mini-batch가 각 activation의 평균과 분산 추정치를 만들어 냄
 이 방법으로 정규화에 사용된 통계값은 모두 backpropagation에 참여할 수 있음
 
-<img src="/Users/seohui/Downloads/IMG_DECFC4D96C29-1.jpeg" alt="IMG_DECFC4D96C29-1" style="zoom: 33%;" />
+<img width="400" alt="BN Transform" src="https://user-images.githubusercontent.com/53266682/124772931-6f84ab80-df77-11eb-8ab6-460343e388c1.jpeg" />
 
 BN transform은 미분가능한 transform이며, 정규화된 activations를 network에 갖고 옴
 
@@ -123,7 +123,7 @@ BN transform은 미분가능한 transform이며, 정규화된 activations를 net
   - mini-batch에 의한 activation 정규화는 효율적인 학습을 가능하게 하지만, 추론에는 바람직하지도 필요하지도 않음 (입력값에 대한 출력값만 필요할 뿐)
   - 한 번 network가 학습되면, mini-batch나 통계치가 아니라 population을 이용한 정규화 사용
 
-  <img src="/Users/seohui/Downloads/IMG_E2BDF86B3927-1.jpeg" alt="IMG_E2BDF86B3927-1" style="zoom:10%;" />
+<img width="250" alt="inference normalization" src="https://user-images.githubusercontent.com/53266682/124772950-74495f80-df77-11eb-8c4e-323da3e2d455.jpeg" />
 
 - Batch-Normalized Convolution Networks
   - FC와 합성곱층 커버
