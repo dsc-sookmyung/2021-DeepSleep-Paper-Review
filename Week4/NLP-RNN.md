@@ -66,7 +66,9 @@ RNN 구조에서 일어나는 계산에 대한 식은 아래와 같다.
 
 - ![x_t](http://s0.wp.com/latex.php?latex=x_t&bg=ffffff&fg=000&s=0)는 시간 스텝(time step) ![t](http://s0.wp.com/latex.php?latex=t&bg=ffffff&fg=000&s=0)에서의 입력값이다. 
 
-- ![s_t](http://s0.wp.com/latex.php?latex=s_t&bg=ffffff&fg=000&s=0)는 시간 스텝 ![t](http://s0.wp.com/latex.php?latex=t&bg=ffffff&fg=000&s=0)에서의 hidden state이다. 네트워크의 "메모리" 부분으로서, 이전 시간 스텝의 hiddent state 값과 현재 시간 스텝의 입력값에 의해 계산된다: <img src="/Users/seohui/Library/Application Support/typora-user-images/스크린샷 2021-07-24 오후 10.15.38.png" alt="스크린샷 2021-07-24 오후 10.15.18" style="zoom:50%;" />
+- ![s_t](http://s0.wp.com/latex.php?latex=s_t&bg=ffffff&fg=000&s=0)는 시간 스텝 ![t](http://s0.wp.com/latex.php?latex=t&bg=ffffff&fg=000&s=0)에서의 hidden state이다. 네트워크의 "메모리" 부분으로서, 이전 시간 스텝의 hiddent state 값과 현재 시간 스텝의 입력값에 의해 계산된다: 
+
+  <img width="447" alt="RNN-계산식" src="https://user-images.githubusercontent.com/53266682/126878499-e2cc8cdf-1605-425c-8c62-abb2d6b2ca68.png">
 
   _출처 https://www.boostcourse.org/ai212/lecture/43749?isDesc=false_
 
@@ -80,7 +82,8 @@ RNN 구조에서 일어나는 계산에 대한 식은 아래와 같다.
 - 각 layer마다의 파라미터 값들이 전부 다 다른 기존의 deep한 신경망 구조와 달리, RNN은 모든 시간 스텝에 대해 파라미터 값을 전부 공유하고 있다 (위 그림의 U, V, W). 이는 RNN이 각 스텝마다 입력값만 다를 뿐 거의 똑같은 계산을 하고 있다는 것을 보여준다. 이는 학습해야 하는 파라미터 수를 많이 줄여준다.
 - 위 다이어그램에서는 매 시간 스텝마다 출력값을 내지만, 문제에 따라 달라질 수도 있다. 예를 들어, 문장에서 긍정/부정적인 감정을 추측하고 싶다면 굳이 모든 단어 위치에 대해 추측값을 내지 않고 최종 추측값 하나만 내서 판단하는 것이 더 유용할 수도 있다. 마찬가지로, 입력값 역시 매 시간 스텝마다 꼭 다 필요한 것은 아니다. RNN에서의 핵심은 시퀀스 정보에 대해 어떠한 정보를 추출해 주는 hidden state이기 때문이다.
 
-![스크린샷 2021-07-24 오후 10.37.00](/Users/seohui/Library/Application Support/typora-user-images/스크린샷 2021-07-24 오후 10.37.36.png)
+<img width="100%" alt="Character-level language model example" src="https://user-images.githubusercontent.com/53266682/126878508-eed5f7fc-14c7-43b1-8db1-7446fdfca716.png">
+
 
 ##### RNN Applications
 
@@ -173,7 +176,7 @@ LSTM의 핵심은 `cell state` 이다. 다이어그램 상단에 있는 수평�
 
 LSTM은 신중하게 정제된 구조를 가진 `gate` 들을 이용해 cell state에 정보를 더하거나 없앨 수 있다. 게이트들은 sigmoid neural net layer와 점단위 곱하기 연산으로 이루어져있다.
 
-<img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-gate.png" alt="img" style="zoom:50%;" />
+<img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-gate.png" alt="img" style="zoom:30%;" />
 
 sigmoid layer는 0부터 1까지의 출력값을 가지며, 각 요소를 얼마나 통과시킬지 나타낸다. 0은 "아무것도 통과시키지 않음"을 의미하고, 1은 "모든 것을 통과시킴!"을 의미한다. (sigmoid layer를 통해 정보를 몇 % 통과시킬지 정한다.)
 
