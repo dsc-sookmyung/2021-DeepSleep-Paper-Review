@@ -215,7 +215,8 @@ LSTM은 RNN과 비교하여 긴 시퀀스의 입력을 처리하는데 탁월한
 
 #### 게이트 순환 유닛(Gated Recurrent Unit, GRU)
 
-GRU(Gated Recurrent Unit)는 2014년 뉴욕대학교 조경현 교수님이 집필한 논문에서 제안되었다. GRU는 LSTM의 장기 의존성 문제에 대한 해결책을 유지하면서, 은닉 상태를 업데이트하는 계산을 줄였다. 다시 말해서, `GRU는 성능은 LSTM과 유사하면서 복잡했던 LSTM의 구조를 간단화` 시켰다.
+GRU(Gated Recurrent Unit)는 2014년 뉴욕대학교 조경현 교수님이 집필한 논문인 [Learning Phrase Representations using RNN Encoder–Decoder
+for Statistical Machine Translation](https://arxiv.org/pdf/1406.1078.pdf)에서 제안되었다. GRU는 LSTM의 장기 의존성 문제에 대한 해결책을 유지하면서, 은닉 상태를 업데이트하는 계산을 줄였다. 다시 말해서, `GRU는 성능은 LSTM과 유사하면서 복잡했던 LSTM의 구조를 간단화` 시켰다.
 
 ![A gated recurrent unit neural network.](http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-var-GRU.png)
 
@@ -247,6 +248,7 @@ RNN에 기반한 seq2seq 모델에는 크게 두 가지 문제가 있다.
 
 트랜스포머(Transformer)는 2017년 구글이 발표한 논문인 "[Attention is all you need](https://arxiv.org/abs/1706.03762)"에서 나온 `모델`로 기존의 seq2seq의 구조인 인코더-디코더를 따르면서도, 논문의 이름처럼 `어텐션(Attention)으로만`으로 구현한 모델이다. 이 모델은 RNN을 사용하지 않고, 인코더-디코더 구조를 설계하였음에도 성능도 RNN보다 우수하다는 특징을 갖고 있다. seq2seq처럼 인코더-디코더 구조를 유지하고 있는데, 다른 점은 인코더와 디코더라는 단위가 N개가 존재할 수 있다는 점이다.
 
+<img width="311" alt="Transformer" src="https://user-images.githubusercontent.com/53266682/126884646-ed969f99-4460-4094-9a98-de16de465254.png">
 
 
 ## 단어의 표현 방법
