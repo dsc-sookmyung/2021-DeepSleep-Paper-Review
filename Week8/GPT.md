@@ -6,11 +6,15 @@
 
 언어 모델(Language Model, LM)은 **단어 시퀀스에 확률을 할당**하는 일을 하는 모델로, **이전 단어들이 주어졌을 때 다음 단어를 예측**하도록 한다.
 
-<img src="https://thegradient.pub/content/images/2019/10/lm-1.png" alt="img" style="zoom:70%;" />
+<img src="https://thegradient.pub/content/images/2019/10/lm-1.png" alt="img" width="70%" />
+
+_출처 https://thegradient.pub/understanding-evaluation-metrics-for-language-models/_
 
 **`Generative Model vs Discriminative Model`**
 
-<img src="https://datawarrior.files.wordpress.com/2016/05/discriminative_vs_generative.png" alt="img" style="zoom:40%;" />
+<img src="https://datawarrior.files.wordpress.com/2016/05/discriminative_vs_generative.png" alt="img" width="40%" />
+
+_출처 https://datawarrior.wordpress.com/2016/05/08/generative-discriminative-pairs/_
 
 - Discriminative model: 레이블 정보가 있어야 하기 때문에 지도학습(supervised learning) 범주에 속하며, 주어진 데이터의 레이블을 잘 구분하는 결정 경계(decision boundary)를 학습하는 것이 목표다.
 - Generative model: 레이블 정보가 있어도 되고, 없어도 되며 범주의 분포(distribution)를 학습하는 것이 목표다.
@@ -38,7 +42,7 @@ _generative 모델과 discriminative 모델의 차이점은 [여기](https://rat
 
 ## Framework
 
-#### 2단계 학습 과정 (Two-stages training procedure)
+### 2단계 학습 과정 (Two-stages training procedure)
 
 **1단계**
 
@@ -51,7 +55,7 @@ _generative 모델과 discriminative 모델의 차이점은 [여기](https://rat
 - Discriminative Fine-tuning Language Model
 - Labeled data 활용하여 specific task에 학습
 
-#### Model architecture
+### Model architecture
 
 - 기존 Transformer의 decoder를 12개 쌓은 구조 (decoder에서 Multi-Head Attention 제외)
 
@@ -59,13 +63,15 @@ _generative 모델과 discriminative 모델의 차이점은 [여기](https://rat
 
   → Masked Multi-Head Attention에서 `Masking`은 언어 모델이 현재 단어의 오른쪽에 있는 후속 단어에 접근할 수 없게 하는 언어 모델 목표를 달성하는데 도움을 준다.
 
-  <img src="https://i.imgur.com/Q7IS78n.png" alt="img" style="zoom:40%;" />
+  <img src="https://i.imgur.com/Q7IS78n.png" alt="img" width="40%" />
+  
+  _출처 https://ratsgo.github.io/nlpbook/docs/language_model/bert_gpt/_
 
 - transfer를 하는 동안, 구조화된 텍스트 입력을 단일 연속 토큰 시퀀스로 처리하는 traversal-style 접근 방식에서 파생된 `task-specific input transformation`을 활용한다.
 
   → 사전 학습된 모델의 아키텍처를 최소한으로 변경하여 효과적으로 fine-tune을 할 수 있다.
 
-#### Step 1. Unsupervised pre-training
+### Step 1. Unsupervised pre-training
 
 - Pre-training of  `Language Model`
 
@@ -80,7 +86,7 @@ _generative 모델과 discriminative 모델의 차이점은 [여기](https://rat
   
   - use a multi-layer _Transformer decoder_ for the language model
 
-#### Step 2. Supervised fine-tuning
+### Step 2. Supervised fine-tuning
 
 - Fine tuning on each specific task
 
@@ -103,24 +109,22 @@ _generative 모델과 discriminative 모델의 차이점은 [여기](https://rat
 
   - Fine-tuning 과정 동안 레이블링을 통해 모델이 특정 task에 최적화되게 한다.
 
-    
+![GPT1구조](https://user-images.githubusercontent.com/53266682/130374807-1c4457f4-61d6-45f7-bb75-f423109f4bac.png)
 
-![Figure 1: (left) Transformer architecture and training objectives used in this work. (right) Input transformations for fine-tuning on different tasks. We convert all structured inputs into token sequences to be processed by our pre-trained model, followed by a linear+softmax layer.](https://d3i71xaburhd42.cloudfront.net/cd18800a0fe0b668a1cc19f2ec95b5003d0a5035/4-Figure1-1.png)
-
-#### Task-specific input transformation
+### Task-specific input transformation
 
 Classification 같은 일부 task는 바로 fine-tune이 가능하다.
 
 다른 특정 task는 구조화된 입력을 갖고 있다. 논문의 pre-trained 모델이 텍스트의 연속 시퀀스로 학습했기 때문에, 이러한 task들을 이 모델에 적용하기 위해서는 수정이 필요하다. 이 논문에서는 논문의 pre-trained 모델이 처리할 수 있게, 구조화된 입력을 정렬된 시퀀스로 변환해주는 traversal-style approach를 사용했다. 이 입력 변환(input transformation)을 통해 작업 전반에 걸쳐 아키텍처를 최소한으로 변경하여 효과적으로 fine-tune을 할 수 있다.
 
-- 무작위로 초기화된 start와 end tokens(<s>, <e>)을 입력 시퀀스에 추가한다.
+- 무작위로 초기화된 start와 end tokens를 입력 시퀀스에 추가한다.
 
 - 두 개의 문장 사이에 special character(delimeter)를 집어넣고 하나의 문장으로 묶어서 모델의 입력 layer에 넣는다.
 
 
 ## Experiments
 
-#### 1. Unsupervised Training
+### 1. Unsupervised Training
 
 **`Dataset`**
 
@@ -152,7 +156,7 @@ Classification 같은 일부 task는 바로 fine-tune이 가능하다.
 
       → 입력값의 의미 더 잘 전달
 
-#### 2. Supervised Fine-tuning
+### 2. Supervised Fine-tuning
 
 Unsupervised pre-training에서 사용한 하이퍼파라미터를 재사용했다.
 
@@ -168,8 +172,8 @@ Unsupervised pre-training에서 사용한 하이퍼파라미터를 재사용했�
 
   - Examples
 
-    ![스크린샷 2021-08-21 오후 10.33.41](/Users/seohui/Library/Application Support/typora-user-images/스크린샷 2021-08-21 오후 10.33.41.png)
-
+    <img width="681" alt="img" src="https://user-images.githubusercontent.com/53266682/130374277-1feba1ca-e9d1-4a4f-b8a7-b083c76c161c.png">
+    
     _출처 https://github.com/kakaobrain/KorNLUDatasets_
 
 - **Question answering and commonsense reasoning**
@@ -180,8 +184,8 @@ Unsupervised pre-training에서 사용한 하이퍼파라미터를 재사용했�
 
   - Examples
 
-    ![img](https://rajpurkar.github.io/mlx/qa-and-squad/example-squad.png)
-
+    <img src="https://rajpurkar.github.io/mlx/qa-and-squad/example-squad.png" alt="img" width="70%" />
+    
     _출처 https://rajpurkar.github.io/mlx/qa-and-squad/_
 
 - **Semantic Similarity**
@@ -192,7 +196,7 @@ Unsupervised pre-training에서 사용한 하이퍼파라미터를 재사용했�
 
   - Examples
 
-    <img src="https://2.bp.blogspot.com/-9Qk1fubLpzg/Wv2QGgKVVmI/AAAAAAAACvs/Gm-XF3prXVIIvaIkrTmkcIcYz-4qSxLKwCLcBGAs/s1600/image2.png" alt="img" style="zoom:50%;" />
+    <img src="https://2.bp.blogspot.com/-9Qk1fubLpzg/Wv2QGgKVVmI/AAAAAAAACvs/Gm-XF3prXVIIvaIkrTmkcIcYz-4qSxLKwCLcBGAs/s1600/image2.png" alt="img" width="50%" />
 
     _출처 https://ai.googleblog.com/2018/05/advances-in-semantic-textual-similarity.html_
 
@@ -203,9 +207,9 @@ Unsupervised pre-training에서 사용한 하이퍼파라미터를 재사용했�
 
   - Examples
 
-    ![DEMO](https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F1746215%2F6d0f345133d3c809bf3c137c1719dbbe%2Fss?generation=1576751860325651&alt=media)
+    <img src="https://paperswithcode.com/media/datasets/sst.jpg" alt="img" width="50%" />
 
-    _출처 https://www.kaggle.com/atulanandjha/stanford-sentiment-treebank-v2-sst2_
+    _출처 https://paperswithcode.com/dataset/sst_
 
 **⇒ 12개 부문 중 9개 부문에서 SOTA를 달성했다.**
 
@@ -216,9 +220,9 @@ Unsupervised pre-training에서 사용한 하이퍼파라미터를 재사용했�
 unsupervised pre-training에서 supervised target task로 다양한 수의 레이어를 전이(transfer)했을 때의 영향을 관찰한 결과
 
 - Layer의 개수가 증가함에 따라 정확도가 향상되었다.
-- Layer #12 이후부터는 수렴 양상을 보였다.
+- Layer #12 이후부터는 수렴 양상을 보였다.  _(Cf. 모델 아키텍처: Transformer의 decoder를 12개 쌓은 구조)_
 
-![Figure 2: (left) Effect of transferring increasing number of layers from the pre-trained language model on RACE and MultiNLI. (right) Plot showing the evolution of zero-shot performance on different tasks as a function of LM pre-training updates. Performance per task is normalized between a random guess baseline and the current state-of-the-art with a single model.](https://d3i71xaburhd42.cloudfront.net/cd18800a0fe0b668a1cc19f2ec95b5003d0a5035/7-Figure2-1.png)
+![GPT1-Figure2](https://user-images.githubusercontent.com/53266682/130374819-ef287ae8-495a-4240-910e-5ebcabd71468.png)
 
 **`Zero-shot Behaviors of the pre-trained model`** 
 
@@ -238,7 +242,7 @@ _위 설명은 [ratsgo's NLPBOOK](https://ratsgo.github.io/nlpbook/docs/introduc
 
 _Cf. Ablation study란? 전체 시스템에 대한 구성 요소의 기여도를 이해하기 위해 특정 구성 요소를 제거하여 AI 시스템의 성능을 연구하는 것이다._
 
-![Table 5: Analysis of various model ablations on different tasks. Avg. score is a unweighted average of all the results. (mc= Mathews correlation, acc=Accuracy, pc=Pearson correlation)](https://d3i71xaburhd42.cloudfront.net/cd18800a0fe0b668a1cc19f2ec95b5003d0a5035/8-Table5-1.png)
+![GPT1-Table5-1](https://user-images.githubusercontent.com/53266682/130374825-e98fa781-0523-42a5-8438-e06ea09ae366.png)
 
 _Classification tasks: CoLA, SST2  | Semantic Similarity tasks: MRPC, STSB, QQP | NLI tasks: NMLI, QNLI, RTE_
 
@@ -265,7 +269,7 @@ GPT-1은 생성적 사전 학습(generative pre-training)의 힘을 보여주었
 
 ## 추가
 
-#### Fine-tuning, N-shot learning
+### Fine-tuning, N-shot learning
 
 전이 학습(Transfer Learning)에서 downstream task를 학습하는 방식
 
@@ -276,7 +280,7 @@ GPT-1은 생성적 사전 학습(generative pre-training)의 힘을 보여주었
 
 _출처 [ratsgo's NLPBOOK](https://ratsgo.github.io/nlpbook/docs/introduction/transfer/)_
 
-#### OpenAI GPT models
+### OpenAI GPT models
 
 1. **GPT-1** paper ([Improving Language Understanding by Generative Pre-training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf)).
    - Fine-tuning
@@ -315,9 +319,10 @@ _위 논문들은 [여기](https://medium.com/walmartglobaltech/the-journey-of-o
 
 _Cf. GPT-1, GPT-2와 비교한 GPT-3의 어마어마한 파라미터 개수_
 
-<img src="https://research.aimultiple.com/wp-content/uploads/2021/01/number-of-model-parameters-from-Elmo-to-Turing-NLG-1536x917.png" alt="img" style="zoom:40%;" /><img src="https://research.aimultiple.com/wp-content/uploads/2021/01/number-of-model-parameters-until-gpt-3.png" alt="img" style="zoom:43%;" />
+<img src="https://research.aimultiple.com/wp-content/uploads/2021/01/number-of-model-parameters-from-Elmo-to-Turing-NLG-1536x917.png" alt="img" style="zoom:40%;" /><img src="https://research.aimultiple.com/wp-content/uploads/2021/01/number-of-model-parameters-until-gpt-3.png" alt="img" />
 
-
+_출처 https://research.aimultiple.com/gpt/_
+  
 
 ## 	참고 자료
 
